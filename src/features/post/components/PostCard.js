@@ -1,5 +1,6 @@
 import "../../post/styles.css";
 import { Avatar } from "../../../Components/Avatar/Avatar";
+import { ButtonPrimary } from "../../../Components/Buttons";
 const PostCard = () => {
   return (
     <div className="new-post-container-grid bord-3-purple">
@@ -14,7 +15,7 @@ const PostCard = () => {
             <span>·</span>
             <span>10min ago</span>
           </div>
-          <button>follow</button>
+          <ButtonPrimary>Follow</ButtonPrimary>
         </div>
         <div className="bord-3-blue">
           Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis

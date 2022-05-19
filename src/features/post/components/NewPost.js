@@ -1,4 +1,5 @@
 import { Avatar } from "../../../Components/Avatar/Avatar";
+import { ButtonPrimary } from "../../../Components/Buttons";
 import "../../post/styles.css";
 const NewPost = () => {
   return (
@@ -13,7 +14,7 @@ const NewPost = () => {
             placeholder="What's happening?"
           />
           <div className="flex-row justify-end-flex">
-            <button>Post</button>
+            <ButtonPrimary>Post</ButtonPrimary>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Avatar } from "../Avatar/Avatar";
+import { ButtonPrimary } from "../Buttons";
 import "./UserSuggestionSection.css";
 const arr = [1, 2, 3];
 const UserSuggestionSection = () => {
@@ -19,7 +20,7 @@ const UserSuggestionSection = () => {
                   <span>@the_dark_knight</span>
                 </div>
               </div>
-              <button>Follow</button>
+              <ButtonPrimary>Follow</ButtonPrimary>
             </div>
           );
         })}
