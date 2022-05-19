@@ -1,16 +1,12 @@
-.login-page-container{
+.signup-page-container{
     border : 3px solid green;
     margin-top : 10rem;
 }
 
-.login-section{
+.signup-section{
     border : 3px solid blue;
     width : 50%;
     padding : 2rem;
-}
-
-.login-section > div{
-    border : 3px solid purple;
 }
 
 .auth-form-title{

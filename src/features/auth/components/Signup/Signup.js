@@ -1,28 +1,19 @@
-import "./Login.css";
-import { useState } from "react";
 import { BatNetworkContainer } from "../../../../Components/Wrapper/BatNetworkContainer";
 import { InputField, PasswordField } from "../../../../Components/InputFields";
 import { ButtonPrimary } from "../../../../Components/Buttons";
+import { signupHandler } from "../../authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { loginHandler } from "../../authSlice";
-import { useSelector } from "react-redux";
-
-const Login = () => {
+import "./Signup.css";
+const Signup = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.auth.isLoading);
   const [inputData, setInputData] = useState({
     input: {},
-    hide: { pwd: true },
+    hide: { pwd: true, confPwd: true },
     error: "",
   });
-
-  const navigate = useNavigate();
-
-  const guestLoginCredentials = {
-    username: "the_dark_knight",
-    password: "batman123",
-  };
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -35,30 +26,46 @@ const Login = () => {
   const showHidePasswordHandler = () => {
     setInputData((prevData) => ({
       ...prevData,
-      hide: { pwd: !prevData.hide.pwd },
+      hide: { ...prevData.hide, pwd: !prevData.hide.pwd },
+    }));
+  };
+
+  const showHideConfirmPasswordHandler = () => {
+    setInputData((prevData) => ({
+      ...prevData,
+      hide: { ...prevData.hide, confPwd: !prevData.hide.confPwd },
     }));
   };
 
   return (
     <BatNetworkContainer>
-      <section className="flex-row justify-center-flex login-page-container">
-        <div className="login-section">
+      <section className="flex-row justify-center-flex signup-page-container">
+        <div className="signup-section">
           <div className="flex-row justify-center-flex">
-            <h2 className="auth-form-title">Login</h2>
+            <h2 className="auth-form-title">Signup</h2>
           </div>
           <div className="flex-row justify-center-flex">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                dispatch(loginHandler({ inputData, setInputData }));
+                dispatch(signupHandler({ inputData, setInputData }));
               }}
             >
               <div className="flex-col gap-1">
                 <InputField
                   type={"text"}
+                  fieldTitle={"Name"}
+                  name={"fullName"}
+                  fieldPlaceholder={"Enter your name."}
+                  onChange={inputChangeHandler}
+                  value={inputData.input.fullName}
+                  required={true}
+                />
+                <InputField
+                  type={"text"}
                   fieldTitle={"Username"}
                   name={"username"}
-                  fieldPlaceholder={"Enter your username"}
+                  fieldPlaceholder={"Enter your username."}
                   onChange={inputChangeHandler}
                   value={inputData.input.username}
                   required={true}
@@ -80,30 +87,39 @@ const Login = () => {
                     ></i>
                   </div>
                 </PasswordField>
-                <div className="flex-col">
-                  <div className="flex-row justify-center-flex">
-                    <ButtonPrimary>Login</ButtonPrimary>
+                <PasswordField
+                  type={inputData.hide.confPwd ? "password" : "text"}
+                  fieldTitle={"Confirm Password"}
+                  name={"confirmPassword"}
+                  fieldPlaceholder={"Enter your Password again"}
+                  onChange={inputChangeHandler}
+                  value={inputData.input.confirmPassword}
+                  required={true}
+                >
+                  <div
+                    className="curs-point"
+                    onClick={showHideConfirmPasswordHandler}
+                  >
+                    <i
+                      className={`fa-solid ${
+                        inputData.hide.confPwd ? "fa-eye" : "fa-eye-slash"
+                      }`}
+                    ></i>
                   </div>
-                  <div className="flex-row justify-center-flex">
-                    <span>or</span>
-                  </div>
-                  <div className="flex-row justify-center-flex">
-                    <ButtonPrimary
-                      onClick={() => {
-                        setInputData((prevData) => ({
-                          ...prevData,
-                          input: guestLoginCredentials,
-                        }));
-                      }}
-                    >
-                      Guest Login
-                    </ButtonPrimary>
+                </PasswordField>
+                <div className="flex-row justify-center-flex">
+                  <div>
+                    <ButtonPrimary>Signup</ButtonPrimary>
                   </div>
                 </div>
+                {true &&
+                  !(
+                    inputData.input.password === inputData.input.confirmPassword
+                  ) && <p>The passwords you entered does not match.</p>}
                 <div className="flex-row gap-1">
                   <span>New to SHOEDOG?</span>
-                  <Link to="/signup" className="curs-point">
-                    Signup
+                  <Link className="curs-point" to="/login">
+                    Login
                   </Link>
                 </div>
               </div>
@@ -123,4 +139,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Signup };

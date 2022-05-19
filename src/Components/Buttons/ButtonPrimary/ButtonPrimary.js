@@ -1,6 +1,10 @@
 import "./ButtonPrimary.css";
-const ButtonPrimary = ({ children }) => {
-  return <ButtonPrimary className="curs-point">{children}</ButtonPrimary>;
+const ButtonPrimary = ({ children, onClick }) => {
+  return (
+    <button onClick={onClick} className="curs-point">
+      {children}
+    </button>
+  );
 };
 
 export { ButtonPrimary };
