@@ -2,11 +2,23 @@ import "./Home.css";
 import { BatNetworkContainer } from "../../Components/Wrapper/BatNetworkContainer";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import { RightSidebar } from "../../Components/RightSidebar/RightSidebar";
-import { NewPost } from "../../features/post/components/NewPost";
 import { SortBar } from "../../Components/Sortbar/SortBar";
-import { PostCard } from "../../features/post/components/PostCard";
-const arr = [1, 2, 3, 4, 5];
+import { PostCard, NewPost } from "../../features/post";
+import { useEffect } from "react";
+import { getPosts } from "../../features/post";
+import { getAllUsers } from "../../features/user";
+import { useDispatch, useSelector } from "react-redux";
+
 const Home = () => {
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.post.posts);
+  const isLoading = useSelector((state) => state.post.isLoading);
+
+  useEffect(() => {
+    dispatch(getPosts());
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
   return (
     <BatNetworkContainer>
       <div className="home-grid-container bord-3-purple">
@@ -16,8 +28,17 @@ const Home = () => {
             <div className="page-title bord-3-black">Home</div>
             <NewPost />
             <SortBar />
-            {arr.map((post) => {
-              return <PostCard key={post} />;
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : posts.length ? (
+              [...posts].reverse().map((post) => {
+                return <PostCard key={post._id} post={post} />;
+              })
+            ) : (
+              <div>No posts</div>
+            )}
+            {posts.map((post) => {
+              return <PostCard key={post} post={post} />;
             })}
           </div>
         </div>
