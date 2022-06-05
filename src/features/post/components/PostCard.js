@@ -2,15 +2,20 @@ import "../../post/styles.css";
 import { Avatar } from "../../../Components/Avatar/Avatar";
 import { ButtonPrimary } from "../../../Components/Buttons";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({ post }) => {
   const users = useSelector((state) => state.user.users);
-  const { content, fullName, username, likes, comments } = post;
+  const navigate = useNavigate();
+  const { content, fullName, username, likes, comments, id } = post;
 
   const userOfPost = users?.find((user) => user.username === username);
 
   return (
-    <div className="new-post-container-grid bord-3-purple">
+    <div
+      className="new-post-container-grid bord-3-purple curs-point"
+      onClick={() => navigate(`/post/${id}`)}
+    >
       <div className="bord-3-green">
         <Avatar
           avatar={userOfPost?.profileAvatar}
@@ -22,11 +27,11 @@ const PostCard = ({ post }) => {
         <div className="flex-row justify-space-between-flex align-center-flex">
           <div className="flex-row align-center-flex user-username-for-post-details">
             <strong>{fullName}</strong>
-            <span>{username}</span>
+            <span>@{username}</span>
             <span>·</span>
             <span>10min ago</span>
           </div>
-          <ButtonPrimary>Follow</ButtonPrimary>
+          <i className="fa-solid fa-ellipsis-vertical curs-point"></i>
         </div>
         <div className="bord-3-blue">{content}</div>
         <div className="flex-row gap-1">
@@ -40,7 +45,6 @@ const PostCard = ({ post }) => {
           </div>
           <div className="bord-3-purple flex-row post-card-single-CTA-container">
             <button>Bookmark</button>
-            <span>1</span>
           </div>
         </div>
       </div>

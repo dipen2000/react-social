@@ -37,9 +37,6 @@ const Home = () => {
             ) : (
               <div>No posts</div>
             )}
-            {posts.map((post) => {
-              return <PostCard key={post} post={post} />;
-            })}
           </div>
         </div>
         <RightSidebar />

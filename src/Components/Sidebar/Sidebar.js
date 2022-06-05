@@ -1,16 +1,20 @@
 import "./Sidebar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserHandle } from "../UserHandle/UserHandle";
 const Sidebar = () => {
   const activeStyle = {
     borderBottom: "2px solid black",
   };
+
+  const navigate = useNavigate();
   return (
     <div className="aside-section">
       <div className="aside-section-fixed flex-col bord-3-purple justify-space-between-flex">
         <div className="flex-col gap-2">
           <div className="bord-3-red flex-row align-center-flex justify-center-flex">
-            <h3>BAT-NETWORK</h3>
+            <h3 className="curs-point" onClick={() => navigate("/")}>
+              BAT-NETWORK
+            </h3>
           </div>
           <div>
             <ul className="flex-col gap-1 align-center-flex">

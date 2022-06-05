@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getPostsService } from "../../service/postService";
+import { getSinglePostService } from "../../service/postService";
 
 export const getPosts = createAsyncThunk("post/getPosts", async () => {
   try {
@@ -12,6 +13,21 @@ export const getPosts = createAsyncThunk("post/getPosts", async () => {
     console.log(e);
   }
 });
+
+export const getSinglePost = createAsyncThunk(
+  "post/getSinglePost",
+  async (postId) => {
+    try {
+      const { data, status } = await getSinglePostService(postId);
+      if (status === 200) {
+        return data.post;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -31,6 +47,13 @@ const postSlice = createSlice({
     [getPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
       state.posts = payload;
+    },
+    [getSinglePost.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getSinglePost.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.singlePost = payload;
     },
   },
 });
