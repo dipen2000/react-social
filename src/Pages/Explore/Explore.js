@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const Explore = () => {
   const dispatch = useDispatch();
+  const a = 2;
   const posts = useSelector((state) => state.post.posts);
   const isLoading = useSelector((state) => state.post.isLoading);
 
