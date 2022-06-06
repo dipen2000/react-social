@@ -1,9 +1,0 @@
-.aside-section{
-    position:relative;
-}
-
-.aside-section-fixed{
-    position: fixed;
-    height : 98vh;
-    width : 20rem;
-}
